@@ -7,7 +7,9 @@ namespace Gala.Plugins.SaveWins {
 	public class Main : Gala.Plugin {
         private Gala.WindowManager? wm = null;
         private Meta.Display display;
-
+#if HAS_MUTTER2
+        private Meta.Screen screen;
+#endif
         private Gee.HashMap<string, int> windows_ws;
         private bool init_state;
         private string path_to_cache;
@@ -22,7 +24,8 @@ namespace Gala.Plugins.SaveWins {
             display = wm.get_display ();
 #endif
 #if HAS_MUTTER2
-            display = wm.get_screen ().get_display ();
+            screen = wm.get_screen ();
+            display = screen.get_display ();
 #endif
             windows_ws = new Gee.HashMap<string, int> ();
             path_to_cache = GLib.Environment.get_user_cache_dir () + "/gala_plugins";
@@ -89,12 +92,16 @@ namespace Gala.Plugins.SaveWins {
 
         private void save_state (bool start) {
             if (start) {
+#if HAS_MUTTER3
                 var ws_manager = display.get_workspace_manager ();
-
+                unowned GLib.List<Meta.Workspace> workspaces_list = ws_manager.get_workspaces ();
+#else
+                unowned GLib.List<Meta.Workspace> workspaces_list = screen.get_workspaces ();
+#endif
                 if (clear_cache ()) {
                     string[] apps_per_ws = {};
 
-                    foreach (var ws in ws_manager.get_workspaces ()) {
+                    foreach (var ws in workspaces_list) {
                         var ws_index = ws.workspace_index;
                         foreach (var next_win in ws.list_windows ()) {
                             var wmclass = next_win.get_wm_class ();
