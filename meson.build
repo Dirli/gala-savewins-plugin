@@ -36,17 +36,15 @@ if mutter328_dep.found() and mutter330_dep.found()
     error ('No supported mutter library found!')
 endif
 
-deps = [
-    dependency ('gala'),
-    dependency ('gee-0.8'),
-    dependency ('glib-2.0'),
-    dependency ('gio-unix-2.0'),
-    dependency ('libbamf3')
-]
-
 lib = shared_library ('gala-savewins',
                     'src/Main.vala',
-                    dependencies: deps,
+                    dependencies: [
+                        dependency ('gala'),
+                        dependency ('gee-0.8'),
+                        dependency ('glib-2.0'),
+                        dependency ('gio-unix-2.0'),
+                        dependency ('libbamf3')
+                    ],
                     install: true,
                     vala_args: vala_args,
                     install_dir: join_paths (get_option ('libdir'), 'gala', 'plugins'))

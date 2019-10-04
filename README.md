@@ -2,6 +2,7 @@
 Gala plugin to restore windows after reboot
 
 The plugin is in a testing state.
+Unfortunately, for correct work it is necessary to install forked wingpanel-indicator-session (https://github.com/Dirli/wingpanel-indicator-session)
 
 Works with mutter-3.28 and mutter-3.30
 
