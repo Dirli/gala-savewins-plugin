@@ -64,13 +64,13 @@ namespace Gala.Plugins.SaveWins {
 
                             if (!windows_ws.has_key (entry_arr[1])) {
                                 windows_ws[entry_arr[1]] = int.parse (entry_arr[0]);
-                                desktop_files += entry_arr[2].replace ("/usr/share/applications/", "");
+                                desktop_files += entry_arr[2];
                             }
                         }
                     }
 
                     foreach (var desktop_file in desktop_files) {
-                        var app_info = new GLib.DesktopAppInfo (desktop_file);
+                        var app_info = new GLib.DesktopAppInfo.from_filename (desktop_file);
                         if (app_info == null) {
                             continue;
                         }
@@ -91,13 +91,15 @@ namespace Gala.Plugins.SaveWins {
         }
 
         private void save_state (bool start) {
-            if (start) {
+            var settings = new GLib.Settings ("org.gnome.SessionManager");
+            if (start && settings.get_boolean ("auto-save-session")) {
 #if HAS_MUTTER3
                 var ws_manager = display.get_workspace_manager ();
                 unowned GLib.List<Meta.Workspace> workspaces_list = ws_manager.get_workspaces ();
 #else
                 unowned GLib.List<Meta.Workspace> workspaces_list = screen.get_workspaces ();
 #endif
+                // settings.set_boolean ("auto-save-session", false);
                 if (clear_cache ()) {
                     string[] apps_per_ws = {};
 
