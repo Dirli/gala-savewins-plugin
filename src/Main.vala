@@ -25,7 +25,7 @@ namespace Gala.Plugins.SaveWins {
 	public class Main : Gala.Plugin {
         private Gala.WindowManager? wm = null;
         private Meta.Display display;
-#if HAS_MUTTER2
+#if !HAS_MUTTER330
         private Meta.Screen screen;
 #endif
         private Gee.HashMap<string, int> windows_ws;
@@ -38,10 +38,9 @@ namespace Gala.Plugins.SaveWins {
 
         public override void initialize (Gala.WindowManager wm) {
 			this.wm = wm;
-#if HAS_MUTTER3
+#if HAS_MUTTER330
             display = wm.get_display ();
-#endif
-#if HAS_MUTTER2
+#else
             screen = wm.get_screen ();
             display = screen.get_display ();
 #endif
@@ -111,7 +110,7 @@ namespace Gala.Plugins.SaveWins {
         private void save_state (bool start) {
             var settings = new GLib.Settings ("org.gnome.SessionManager");
             if (start && settings.get_boolean ("auto-save-session")) {
-#if HAS_MUTTER3
+#if HAS_MUTTER330
                 var ws_manager = display.get_workspace_manager ();
                 unowned GLib.List<Meta.Workspace> workspaces_list = ws_manager.get_workspaces ();
 #else
