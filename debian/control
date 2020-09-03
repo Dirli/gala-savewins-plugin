@@ -1,0 +1,22 @@
+Source: gala-savewins-plugin
+Section: X11
+Priority: optional
+Maintainer: dirli <litandrej85@gmail.com>
+Build-Depends: debhelper-compat (= 13),
+               gsettings-desktop-schemas-dev,
+               libgala-dev,
+               libgee-0.8-dev,
+               libglib2.0-dev (>= 2.44),
+               libbamf3-dev,
+               meson,
+               valac (>= 0.28.0)
+Standards-Version: 4.5.0
+Homepage: https://github.com/Dirli/gala-savewins-plugin
+Rules-Requires-Root: no
+
+Package: gala-savewins-plugin
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Enhances: gala
+Description: Gala plugin to restore windows after reboot
+ Gala plugin to restore windows after reboot

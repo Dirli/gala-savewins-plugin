@@ -1,0 +1,7 @@
+gala-savewins-plugin (0.3.4-1) testing; urgency=medium
+
+  * updated README
+  * updated the vapi (Mutter 3.36)
+  * added .deb build rules
+
+ -- dirli <litandrej85@gmail.com>  Thu, 03 Sep 2020 22:25:33 +0300
