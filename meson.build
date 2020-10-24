@@ -85,7 +85,6 @@ lib = shared_library (
         dependency ('gee-0.8'),
         dependency ('glib-2.0'),
         dependency ('gio-unix-2.0'),
-        dependency ('libbamf3'),
         mutter_dep
     ],
     install: true,

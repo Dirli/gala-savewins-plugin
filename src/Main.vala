@@ -34,7 +34,6 @@ namespace Gala.Plugins.SaveWins {
         private GLib.File cache_file;
 
         private ILogindManager? logind_manager;
-        private Bamf.Matcher bamf_matcher;
 
         public override void initialize (Gala.WindowManager wm) {
 			this.wm = wm;
@@ -49,8 +48,6 @@ namespace Gala.Plugins.SaveWins {
             cache_file = GLib.File.new_for_path (path_to_cache + "/savewins_cache");
 
             init_state = false;
-
-            bamf_matcher = Bamf.Matcher.get_default ();
 
             try {
                 logind_manager = GLib.Bus.get_proxy_sync (BusType.SYSTEM,
@@ -73,27 +70,34 @@ namespace Gala.Plugins.SaveWins {
                     GLib.DataInputStream dis = new GLib.DataInputStream (cache_file.read ());
                     string line;
 
-                    string[] desktop_files = {};
+                    string[] wm_classes = {};
 
                     while ((line = dis.read_line ()) != null) {
                         var entry_arr = line.split (";");
-                        if (entry_arr.length > 2) {
+                        if (entry_arr.length > 1) {
 
                             if (!windows_ws.has_key (entry_arr[1])) {
                                 windows_ws[entry_arr[1]] = int.parse (entry_arr[0]);
-                                desktop_files += entry_arr[2];
+                                wm_classes += entry_arr[1];
                             }
                         }
                     }
 
-                    foreach (var desktop_file in desktop_files) {
-                        var app_info = new GLib.DesktopAppInfo.from_filename (desktop_file);
-                        if (app_info == null) {
+                    foreach (var wm_class in wm_classes) {
+                        var desktop_file = "%s.desktop".printf (wm_class);
+                        var desktop_info = new GLib.DesktopAppInfo (desktop_file);
+                        if (desktop_info == null) {
+                            desktop_file = desktop_file.ascii_down ().delimit (" ", '-');;
+                            desktop_info = new GLib.DesktopAppInfo (desktop_file);
+                        }
+
+                        if (desktop_info == null) {
+                            warning (@"SaveWins: couldn't match $(wm_class)");
                             continue;
                         }
 
                         try {
-                            app_info.launch (null, null);
+                            desktop_info.launch (null, null);
                         } catch (Error e) {
                             warning (e.message);
                         }
@@ -125,14 +129,7 @@ namespace Gala.Plugins.SaveWins {
                         foreach (var next_win in ws.list_windows ()) {
                             var wmclass = next_win.get_wm_class ();
                             if (wmclass != "Wingpanel" && wmclass != "Plank") {
-                                var xid = next_win.get_xwindow ();
-
-                                var bamf_app = bamf_matcher.get_application_for_xid ((uint32) xid);
-                                if (bamf_app != null) {
-                                    apps_per_ws += "%u;%s;%s\n".printf (ws_index,
-                                                                        wmclass,
-                                                                        bamf_app.get_desktop_file ());
-                                }
+                                apps_per_ws += @"$(ws_index);$(wmclass)\n";
                             }
                         }
                     }
