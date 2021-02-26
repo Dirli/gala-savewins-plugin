@@ -25,9 +25,7 @@ namespace Gala.Plugins.SaveWins {
 	public class Main : Gala.Plugin {
         private Gala.WindowManager? wm = null;
         private Meta.Display display;
-#if !HAS_MUTTER330
-        private Meta.Screen screen;
-#endif
+
         private Gee.HashMap<string, int> windows_ws;
         private bool init_state;
         private string path_to_cache;
@@ -37,12 +35,8 @@ namespace Gala.Plugins.SaveWins {
 
         public override void initialize (Gala.WindowManager wm) {
 			this.wm = wm;
-#if HAS_MUTTER330
             display = wm.get_display ();
-#else
-            screen = wm.get_screen ();
-            display = screen.get_display ();
-#endif
+
             windows_ws = new Gee.HashMap<string, int> ();
             path_to_cache = GLib.Environment.get_user_cache_dir () + "/gala_plugins";
             cache_file = GLib.File.new_for_path (path_to_cache + "/savewins_cache");
@@ -114,12 +108,9 @@ namespace Gala.Plugins.SaveWins {
         private void save_state (bool start) {
             var settings = new GLib.Settings ("org.gnome.SessionManager");
             if (start && settings.get_boolean ("auto-save-session")) {
-#if HAS_MUTTER330
                 var ws_manager = display.get_workspace_manager ();
                 unowned GLib.List<Meta.Workspace> workspaces_list = ws_manager.get_workspaces ();
-#else
-                unowned GLib.List<Meta.Workspace> workspaces_list = screen.get_workspaces ();
-#endif
+
                 // settings.set_boolean ("auto-save-session", false);
                 if (clear_cache ()) {
                     string[] apps_per_ws = {};
