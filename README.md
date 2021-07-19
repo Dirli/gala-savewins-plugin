@@ -20,7 +20,6 @@ You'll need the following dependencies to build:
 * meson
 
 ## How To Build
-### If you are using debian, ubuntu add --libdir=/usr/lib/x86_64-linux-gnu on the first step
 
     meson build --prefix=/usr
     ninja -C build

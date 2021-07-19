@@ -4,12 +4,12 @@ Priority: optional
 Maintainer: dirli <litandrej85@gmail.com>
 Build-Depends: debhelper-compat (= 13),
                gsettings-desktop-schemas-dev,
-               libgala-dev,
+               libgala-dev (>= 6.0.0),
                libgee-0.8-dev,
                libglib2.0-dev (>= 2.44),
                meson,
                valac (>= 0.28.0)
-Standards-Version: 4.5.0
+Standards-Version: 4.5.1
 Homepage: https://github.com/Dirli/gala-savewins-plugin
 Rules-Requires-Root: no
 
