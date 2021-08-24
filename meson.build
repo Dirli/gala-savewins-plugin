@@ -1,7 +1,7 @@
 project (
   'gala-savewins-plugin',
   'vala', 'c',
-  version: '6.0.0'
+  version: '6.1.0'
 )
 
 add_project_arguments ([

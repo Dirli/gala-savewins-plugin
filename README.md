@@ -11,7 +11,7 @@ Gala plugin to restore windows after reboot
 
 ## Building and Installation
 
-You'll need the following dependencies to build:
+### You'll need the following dependencies to build:
 * valac
 * libglib2.0-dev
 * libgee-0.8-dev
@@ -19,17 +19,15 @@ You'll need the following dependencies to build:
 * libbamf3-dev
 * meson
 
-## How To Build
-
+### How to build
     meson build --prefix=/usr
     ninja -C build
     sudo ninja -C build install
 
-## Enable / disable the plugin (true | false)
+## Enable/disable the plugin (true | false)
     gsettings set org.gnome.SessionManager auto-save-session true
 
-## if something went wrong
-
+## If something went wrong
     cd [your lib directory]/gala/plugins
     sudo rm libgala-savewins.so
     reboot

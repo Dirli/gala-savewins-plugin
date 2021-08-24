@@ -1,3 +1,9 @@
+gala-savewins-plugin (6.1.0-1) bullseye; urgency=medium
+
+  * added libmutter-8 support (Mutter 40)
+
+ -- dirli <litandrej85@gmail.com>  Tue, 24 Aug 2021 20:37:02 +0300
+
 gala-savewins-plugin (6.0.0-1) bullseye; urgency=medium
 
   * added libmutter-7 support (Mutter 3.38)
