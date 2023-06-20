@@ -1,11 +1,11 @@
 # gala-savewins-plugin
 Gala plugin to restore windows after reboot
 
-<p align="left">
+<!-- <p align="left">
     <a href="https://paypal.me/Dirli85">
         <img src="https://img.shields.io/badge/Donate-PayPal-green.svg">
     </a>
-</p>
+</p> -->
 
 ----
 
@@ -16,7 +16,7 @@ Gala plugin to restore windows after reboot
 * libglib2.0-dev
 * libgee-0.8-dev
 * libgala-dev
-* libbamf3-dev
+* libgranite-dev
 * meson
 
 ### How to build
