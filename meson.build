@@ -1,10 +1,10 @@
-project (
+project(
   'gala-savewins-plugin',
   'vala', 'c',
-  version: '7.0.0'
+  version: '7.1.0'
 )
 
-add_project_arguments ([
+add_project_arguments([
     '--vapidir=' + join_paths (meson.source_root (), 'vapi'),
   ],
   language: 'vala',
@@ -55,15 +55,15 @@ if mutter44_dep.found()
 	vala_flags = ['--define', 'HAS_MUTTER43', '--define', 'HAS_MUTTER44']
 endif
 
-if mutter_dep.length () == 0
-	error ('No supported mutter library found!')
+if mutter_dep.length() == 0
+	error('No supported mutter library found!')
 endif
 
-mutter_typelib_dir = libmutter_dep.get_pkgconfig_variable ('typelibdir')
+mutter_typelib_dir = libmutter_dep.get_pkgconfig_variable('typelibdir')
 
-vapigen = find_program ('vapigen', required: false)
-if vapigen.found ()
-  subdir ('vapi')
+vapigen = find_program('vapigen', required: false)
+if vapigen.found()
+  subdir('vapi')
 endif
 
 lib = shared_library(
@@ -81,5 +81,5 @@ lib = shared_library(
   vala_args: vala_flags,
   c_args: c_flags,
   install_rpath: mutter_typelib_dir,
-  install_dir: join_paths (get_option ('libdir'), 'gala', 'plugins')
+  install_dir: join_paths(get_option('libdir'), 'gala', 'plugins')
 )
