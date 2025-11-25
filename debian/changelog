@@ -1,3 +1,9 @@
+gala-savewins-plugin (7.1.1-1) testing; urgency=medium
+
+  * added libmutter-13 support (Mutter 45)
+
+ -- dirli <litandrej85@gmail.com>  Tue, 25 Nov 2025 23:49:15 +0300
+
 gala-savewins-plugin (7.0.0-1) testing; urgency=medium
 
   * added libmutter-10 support (Mutter 42)
